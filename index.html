@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registrar Material Limpo</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f0f2f5;
+    }
+
+    .container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 320px;
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #333;
+      font-size: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-weight: 600;
+      margin-bottom: 6px;
+      margin-top: 12px;
+    }
+
+    select {
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 16px;
+      border: 1.8px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    select:focus {
+      border-color: #007BFF;
+    }
+
+    button {
+      margin-top: 24px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0,123,255,0.4);
+      transition: all 0.3s ease;
+    }
+
+    button.enviado {
+      background-color: #28a745 !important;
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bem-vindo!</h1>
+    <h2>Registrar Material Limpo</h2>
+
+    <label for="colaborador">Colaborador:</label>
+    <select id="colaborador">
+      <option value="">Selecione</option>
+      <option value="Maria">Maria</option>
+      <option value="João">João</option>
+      <option value="Carlos">Carlos</option>
+    </select>
+
+    <label for="material">Material:</label>
+    <select id="material">
+      <option value="">Selecione</option>
+      <option value="Roteador">Roteador</option>
+      <option value="Fonte">Fonte</option>
+      <option value="Cabo">Cabo</option>
+    </select>
+
+    <button id="enviar">Enviar</button>
+  </div>
+
+  <script>
+    document.getElementById('enviar').addEventListener('click', function () {
+      const colaborador = document.getElementById('colaborador').value;
+      const material = document.getElementById('material').value;
+      const btn = document.getElementById('enviar');
+
+      if (!colaborador || !material) {
+        alert('Preencha todos os campos.');
+        return;
+      }
+
+      fetch('https://script.google.com/macros/s/AKfycbz5Zm7MDYePF53lN31YoFBNN_L-ujTRh07LpBThCzfDMfyNXoWtDHRZs6O6mjbvcEev/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `colaborador=${encodeURIComponent(colaborador)}&material=${encodeURIComponent(material)}&quantidade=1`
+      })
+      .then(() => {
+        btn.classList.add('enviado');
+        btn.textContent = 'Enviado';
+        setTimeout(() => {
+          btn.classList.remove('enviado');
+          btn.textContent = 'Enviar';
+        }, 2000);
+      })
+      .catch(() => alert('Erro ao enviar.'));
+    });
+  </script>
+</body>
+</html>
